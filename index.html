@@ -1,0 +1,1650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Reliable Logistics - Truck Management
+</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #f5f7fa;
+    color: #20252b;
+}
+
+.top-line {
+    height: 6px;
+    background: #c71920;
+}
+
+.header {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 22px 5%;
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.06);
+}
+
+.header-inner {
+    max-width: 1500px;
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.logo {
+    width: 310px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: 800;
+    color: #252a30;
+}
+
+.header-subtitle {
+    color: #777;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    justify-content: flex-end;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 17px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-print {
+    background: #252a30;
+    color: white;
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+.container {
+    width: 90%;
+    max-width: 1500px;
+    margin: 30px auto;
+}
+
+.welcome {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fff8f8
+        );
+
+    border-left: 5px solid #c71920;
+
+    border-radius: 12px;
+
+    padding: 20px 22px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.05);
+}
+
+.welcome h2 {
+    font-size: 21px;
+    color: #c71920;
+}
+
+.welcome p {
+    margin-top: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 23px;
+}
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 6px 22px rgba(0,0,0,.05);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 4px;
+
+    background: #c71920;
+}
+
+.card-title {
+    color: #73787e;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.card-number {
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 8px;
+    color: #252a30;
+}
+
+.card-description {
+    font-size: 11px;
+    color: #9aa0a6;
+    margin-top: 4px;
+}
+
+.filter-box {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    padding: 21px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 6px 22px rgba(0,0,0,.05);
+}
+
+.filter-heading {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.filters {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid #d9dde2;
+
+    border-radius: 8px;
+
+    background: white;
+
+    outline: none;
+
+    font-size: 13px;
+}
+
+input:focus,
+select:focus {
+    border-color: #c71920;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(199,25,32,.08);
+}
+
+.table-box {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 22px rgba(0,0,0,.05);
+}
+
+.table-header {
+    padding: 18px 21px;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+}
+
+.table-header h2 {
+    font-size: 18px;
+}
+
+.showing {
+    font-size: 12px;
+    color: #777;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 1250px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f7f8f9;
+
+    color: #565d64;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    text-align: left;
+
+    padding: 14px 15px;
+
+    white-space: nowrap;
+}
+
+td {
+    padding: 14px 15px;
+
+    border-top:
+        1px solid #edf0f2;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+tr:hover td {
+    background: #fff9f9;
+}
+
+.truck-column {
+    min-width: 145px;
+}
+
+.driver-column {
+    min-width: 200px;
+}
+
+.mobile-column {
+    min-width: 155px;
+}
+
+.company-reliable {
+    color: #c71920;
+    font-weight: 800;
+}
+
+.company-prakash {
+    color: #1769aa;
+    font-weight: 800;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+}
+
+.inside {
+    background: #e7f7ed;
+
+    color: #16803d;
+
+    border:
+        1px solid #b9e8c8;
+}
+
+.exited {
+    background: #f0f1f3;
+
+    color: #555c63;
+
+    border:
+        1px solid #d8dce0;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+.footer {
+    margin-top: 30px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    color: #8a9096;
+
+    border-top:
+        1px solid #e5e7eb;
+}
+
+@media(max-width:1100px) {
+
+    .cards {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .filters {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-right {
+        text-align: left;
+    }
+
+    .button-row {
+        justify-content: flex-start;
+    }
+}
+
+@media(max-width:650px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        padding: 18px 4%;
+    }
+
+    .logo {
+        width: 270px;
+    }
+
+    .header-title {
+        font-size: 20px;
+    }
+}
+
+@media(max-width:430px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card-number {
+        font-size: 28px;
+    }
+}
+
+@media print {
+
+    .button-row,
+    .filter-box {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .header {
+        box-shadow: none;
+    }
+
+    .table-box {
+        box-shadow: none;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-line"></div>
+
+<header class="header">
+
+<div class="header-inner">
+
+<div>
+
+<img
+src="reliable_logo.png"
+class="logo"
+alt="Reliable Logistics Solutions"
+>
+
+</div>
+
+<div class="header-right">
+
+<div class="header-title">
+Truck Management System
+</div>
+
+<div class="header-subtitle">
+Vehicle Entry & Exit Monitoring
+</div>
+
+<div class="button-row">
+
+<button
+class="btn btn-print"
+onclick="window.print()">
+Print Report
+</button>
+
+<button
+class="btn btn-whatsapp"
+onclick="shareWhatsApp()">
+Share on WhatsApp
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="welcome">
+
+<h2>
+Reliable Logistics Solutions Pvt. Ltd.
+</h2>
+
+<p>
+Professional Truck Entry, Exit & Driver Record Management
+</p>
+
+</section>
+
+<section class="cards">
+
+<div class="card">
+
+<div class="card-title">
+Total Records
+</div>
+
+<div class="card-number">
+10
+</div>
+
+<div class="card-description">
+All truck movements
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Currently Inside
+</div>
+
+<div class="card-number">
+1
+</div>
+
+<div class="card-description">
+Trucks currently inside
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Exited
+</div>
+
+<div class="card-number">
+9
+</div>
+
+<div class="card-description">
+Completed movements
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Reliable
+</div>
+
+<div class="card-number">
+9
+</div>
+
+<div class="card-description">
+Reliable company
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Prakash
+</div>
+
+<div class="card-number">
+1
+</div>
+
+<div class="card-description">
+Prakash company
+</div>
+
+</div>
+
+</section>
+
+<section class="filter-box">
+
+<div class="filter-heading">
+Search & Filter Records
+</div>
+
+<div class="filters">
+
+<input
+type="text"
+id="truckFilter"
+placeholder="Truck Number..."
+>
+
+<input
+type="text"
+id="dateFilter"
+placeholder="Date DD-MM-YYYY..."
+>
+
+<select id="companyFilter">
+
+<option value="">
+All Companies
+</option>
+
+<option value="Reliable">
+Reliable
+</option>
+
+<option value="Prakash">
+Prakash
+</option>
+
+</select>
+
+<select id="statusFilter">
+
+<option value="">
+All Status
+</option>
+
+<option value="INSIDE">
+INSIDE
+</option>
+
+<option value="EXITED">
+EXITED
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+<section class="table-box">
+
+<div class="table-header">
+
+<h2>
+Truck Movement Records
+</h2>
+
+<div class="showing">
+
+Showing
+<strong id="visibleCount">0</strong>
+records
+
+</div>
+
+</div>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th class="truck-column">
+Truck Number
+</th>
+
+<th class="driver-column">
+Driver Name
+</th>
+
+<th class="mobile-column">
+Mobile
+</th>
+
+<th>
+Company
+</th>
+
+<th>
+Entry Date
+</th>
+
+<th>
+Entry Time
+</th>
+
+<th>
+Exit Date
+</th>
+
+<th>
+Exit Time
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+
+<tr
+class="data-row"
+
+data-truck="TN23CT6001"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="01-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+1
+</td>
+
+<td>
+<strong>
+TN23CT6001
+</strong>
+</td>
+
+<td>
+OM PRAKASH
+</td>
+
+<td>
+7010288769
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+12:42 PM
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+01:24 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA18D3423"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="01-09-2026"
+
+data-company="Prakash"
+
+data-status="EXITED"
+>
+
+<td>
+2
+</td>
+
+<td>
+<strong>
+KA18D3423
+</strong>
+</td>
+
+<td>
+SIDIQUE
+</td>
+
+<td>
+9901821288
+</td>
+
+<td>
+<span class="company-prakash">
+Prakash
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+01:03 PM
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+05:07 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="TN73K5861"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="01-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+3
+</td>
+
+<td>
+<strong>
+TN73K5861
+</strong>
+</td>
+
+<td>
+SHAKTI
+</td>
+
+<td>
+9843234767
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+02:21 PM
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+03:12 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="MH04MR4998"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="02-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+4
+</td>
+
+<td>
+<strong>
+MH04MR4998
+</strong>
+</td>
+
+<td>
+SHAYAM YADAV
+</td>
+
+<td>
+9029987382
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+08:22 PM
+</td>
+
+<td>
+02-09-2026
+</td>
+
+<td>
+12:55 AM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA19AF7256"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="02-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+5
+</td>
+
+<td>
+<strong>
+KA19AF7256
+</strong>
+</td>
+
+<td>
+MUSTFFA
+</td>
+
+<td>
+9108353853
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+08:23 PM
+</td>
+
+<td>
+02-09-2026
+</td>
+
+<td>
+12:20 AM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA52C5639"
+
+data-entry-date="01-09-2026"
+
+data-exit-date="02-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+6
+</td>
+
+<td>
+<strong>
+KA52C5639
+</strong>
+</td>
+
+<td>
+AWDHESH
+</td>
+
+<td>
+6301293564
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+01-09-2026
+</td>
+
+<td>
+09:26 PM
+</td>
+
+<td>
+02-09-2026
+</td>
+
+<td>
+01:03 AM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA70.7463"
+
+data-entry-date="13-09-2026"
+
+data-exit-date="13-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+7
+</td>
+
+<td>
+<strong>
+KA70.7463
+</strong>
+</td>
+
+<td>
+IMRAN
+</td>
+
+<td>
+9880491347
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+11:56 AM
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+06:13 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA23B0780"
+
+data-entry-date="13-09-2026"
+
+data-exit-date="13-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+8
+</td>
+
+<td>
+<strong>
+KA23B0780
+</strong>
+</td>
+
+<td>
+MALIKA ARJUN
+</td>
+
+<td>
+9148697826
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+12:07 PM
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+07:33 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="KA36C8374"
+
+data-entry-date="13-09-2026"
+
+data-exit-date=""
+
+data-company="Reliable"
+
+data-status="INSIDE"
+>
+
+<td>
+9
+</td>
+
+<td>
+<strong>
+KA36C8374
+</strong>
+</td>
+
+<td>
+CHANNABASABA
+</td>
+
+<td>
+8660385883
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+08:25 PM
+</td>
+
+<td>
+-
+</td>
+
+<td>
+-
+</td>
+
+<td>
+
+<span class="badge inside">
+INSIDE
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr
+class="data-row"
+
+data-truck="TN29AK1734"
+
+data-entry-date="13-09-2026"
+
+data-exit-date="13-09-2026"
+
+data-company="Reliable"
+
+data-status="EXITED"
+>
+
+<td>
+10
+</td>
+
+<td>
+<strong>
+TN29AK1734
+</strong>
+</td>
+
+<td>
+MURGAN
+</td>
+
+<td>
+6369443547
+</td>
+
+<td>
+<span class="company-reliable">
+Reliable
+</span>
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+04:03 PM
+</td>
+
+<td>
+13-09-2026
+</td>
+
+<td>
+08:49 PM
+</td>
+
+<td>
+
+<span class="badge exited">
+EXITED
+</span>
+
+</td>
+
+</tr>
+
+
+
+<tr id="noResults" style="display:none;">
+
+<td colspan="10" class="no-results">
+
+No matching records found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+<footer class="footer">
+
+Reliable Logistics Solutions Pvt. Ltd.
+&nbsp; | &nbsp;
+Truck Management System
+&nbsp; | &nbsp;
+Reliable + Prakash
+
+</footer>
+
+<script>
+
+// ==========================================================
+// FILTER
+// ==========================================================
+
+function filterRecords()
+{
+    const truck =
+        document
+        .getElementById("truckFilter")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const date =
+        document
+        .getElementById("dateFilter")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const company =
+        document
+        .getElementById("companyFilter")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const rows =
+        document.querySelectorAll(".data-row");
+
+    let visible = 0;
+
+    rows.forEach(function(row)
+    {
+        const rowTruck =
+            row.dataset.truck.toLowerCase();
+
+        const entryDate =
+            row.dataset.entryDate.toLowerCase();
+
+        const exitDate =
+            row.dataset.exitDate.toLowerCase();
+
+        const rowCompany =
+            row.dataset.company.toLowerCase();
+
+        const rowStatus =
+            row.dataset.status.toLowerCase();
+
+        const truckMatch =
+            truck === "" ||
+            rowTruck.includes(truck);
+
+        const dateMatch =
+            date === "" ||
+            entryDate === date ||
+            exitDate === date;
+
+        const companyMatch =
+            company === "" ||
+            rowCompany === company;
+
+        const statusMatch =
+            status === "" ||
+            rowStatus === status;
+
+        const show =
+            truckMatch &&
+            dateMatch &&
+            companyMatch &&
+            statusMatch;
+
+        if (show)
+        {
+            row.style.display = "";
+            visible++;
+        }
+        else
+        {
+            row.style.display = "none";
+        }
+    });
+
+    document
+        .getElementById("visibleCount")
+        .textContent = visible;
+
+    document
+        .getElementById("noResults")
+        .style.display =
+            visible === 0 ? "" : "none";
+}
+
+// ==========================================================
+// FILTER EVENTS
+// ==========================================================
+
+document
+    .getElementById("truckFilter")
+    .addEventListener(
+        "input",
+        filterRecords
+    );
+
+document
+    .getElementById("dateFilter")
+    .addEventListener(
+        "input",
+        filterRecords
+    );
+
+document
+    .getElementById("companyFilter")
+    .addEventListener(
+        "change",
+        filterRecords
+    );
+
+document
+    .getElementById("statusFilter")
+    .addEventListener(
+        "change",
+        filterRecords
+    );
+
+// ==========================================================
+// WHATSAPP
+// ==========================================================
+
+function shareWhatsApp()
+{
+    const message =
+        "Reliable Logistics Solutions Pvt. Ltd.\\n" +
+        "Truck Management Report\\n" +
+        "--------------------------------\\n" +
+        "Total Records: 10\\n" +
+        "Currently Inside: 1\\n" +
+        "Exited: 9\\n" +
+        "Reliable: 9\\n" +
+        "Prakash: 1\\n" +
+        "--------------------------------\\n" +
+        "Truck Management System";
+
+    const url =
+        "https://wa.me/?text=" +
+        encodeURIComponent(message);
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+// ==========================================================
+// INITIAL FILTER
+// ==========================================================
+
+filterRecords();
+
+</script>
+
+</body>
+
+</html>
