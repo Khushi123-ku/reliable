@@ -2741,73 +2741,289 @@ void showSummary()
 // WHATSAPP SHARE
 // ============================================================
 
+
+// ============================================================
+// WHATSAPP SHARE - DATE + COMPANY FILTER
+// ============================================================
+
 void shareWhatsApp()
 {
+    cout << "\n";
+    cout << "====================================================\n";
+    cout << "             WHATSAPP REPORT\n";
+    cout << "====================================================\n";
+
+    // --------------------------------------------------------
+    // COMPANY SELECTION
+    // --------------------------------------------------------
+
+    cout << "\nSelect Company:\n";
+    cout << "1. Reliable\n";
+    cout << "2. Prakash\n";
+    cout << "3. Both Companies\n";
+
+    int companyChoice =
+        inputInt("Enter choice: ");
+
+    string selectedCompany;
+
+    if (companyChoice == 1)
+    {
+        selectedCompany = "RELIABLE";
+    }
+    else if (companyChoice == 2)
+    {
+        selectedCompany = "PRAKASH";
+    }
+    else if (companyChoice == 3)
+    {
+        selectedCompany = "BOTH";
+    }
+    else
+    {
+        cout << "\nInvalid company choice.\n";
+        return;
+    }
+
+    // --------------------------------------------------------
+    // DATE INPUT
+    // --------------------------------------------------------
+
+    string selectedDate;
+
+    while (true)
+    {
+        selectedDate =
+            inputString(
+                "Enter Date (DD-MM-YYYY): "
+            );
+
+        if (isValidDate(selectedDate))
+            break;
+
+        cout << "Invalid date. Please enter again.\n";
+    }
+
+    // --------------------------------------------------------
+    // FILTER RECORDS
+    // --------------------------------------------------------
+
+    vector<TruckRecord> filteredRecords;
+
+    for (const auto& r : records)
+    {
+        bool companyMatch = false;
+
+        if (selectedCompany == "BOTH")
+        {
+            companyMatch = true;
+        }
+        else
+        {
+            companyMatch =
+                upperCase(r.company)
+                ==
+                selectedCompany;
+        }
+
+        // Include record if selected date is either
+        // entry date OR exit date
+        bool dateMatch =
+            (r.entryDate == selectedDate) ||
+            (r.exitDate == selectedDate);
+
+        if (companyMatch && dateMatch)
+        {
+            filteredRecords.push_back(r);
+        }
+    }
+
+    // --------------------------------------------------------
+    // CHECK IF DATA EXISTS
+    // --------------------------------------------------------
+
+    if (filteredRecords.empty())
+    {
+        cout << "\nNo records found for:\n";
+        cout << "Date: " << selectedDate << "\n";
+
+        if (selectedCompany == "BOTH")
+            cout << "Company: Both Companies\n";
+        else
+            cout << "Company: " << selectedCompany << "\n";
+
+        return;
+    }
+
+    // --------------------------------------------------------
+    // COUNT FILTERED STATUS
+    // --------------------------------------------------------
+
+    int insideCount = 0;
+    int exitedCount = 0;
+
+    for (const auto& r : filteredRecords)
+    {
+        if (upperCase(r.status) == "INSIDE")
+        {
+            insideCount++;
+        }
+        else if (upperCase(r.status) == "EXITED")
+        {
+            exitedCount++;
+        }
+    }
+
+    // --------------------------------------------------------
+    // COMPANY NAME FOR REPORT
+    // --------------------------------------------------------
+
+    string companyDisplay;
+
+    if (selectedCompany == "BOTH")
+        companyDisplay = "Reliable + Prakash";
+    else if (selectedCompany == "RELIABLE")
+        companyDisplay = "Reliable";
+    else
+        companyDisplay = "Prakash";
+
+    // --------------------------------------------------------
+    // CREATE WHATSAPP MESSAGE
+    // --------------------------------------------------------
+
     string message =
-        "Reliable Logistics Solutions Pvt. Ltd.\n"
-        "Truck Management Report\n"
-        "--------------------------------\n"
-        "Total Records: "
-        + to_string(records.size())
+        "RELIABLE LOGISTICS SOLUTIONS PVT. LTD.\n"
+        "TRUCK MANAGEMENT REPORT\n"
+        "================================\n\n"
+
+        "REPORT FILTER\n"
+        "Company: " + companyDisplay + "\n"
+        "Date: " + selectedDate + "\n\n"
+
+        "SUMMARY\n"
+        "Total Trucks: "
+        + to_string(filteredRecords.size())
         + "\n"
+
         "Currently Inside: "
-        + to_string(getInsideCount())
+        + to_string(insideCount)
         + "\n"
+
         "Exited: "
-        + to_string(getExitedCount())
-        + "\n"
-        "Reliable: "
-        + to_string(getReliableCount())
-        + "\n"
-        "Prakash: "
-        + to_string(getPrakashCount())
-        + "\n"
-        "--------------------------------\n"
-        "Truck Management System";
+        + to_string(exitedCount)
+        + "\n\n"
+
+        "================================\n"
+        "TRUCK DETAILS\n"
+        "================================\n";
+
+    // --------------------------------------------------------
+    // ADD EACH TRUCK DETAILS
+    // --------------------------------------------------------
+
+    int count = 1;
+
+    for (const auto& r : filteredRecords)
+    {
+        message +=
+            "\n"
+            + to_string(count)
+            + ". TRUCK: "
+            + r.truckNumber
+            + "\n"
+
+            "Driver: "
+            + r.driverName
+            + "\n"
+
+            "Mobile: "
+            + r.mobile
+            + "\n"
+
+            "Company: "
+            + r.company
+            + "\n"
+
+            "Entry: "
+            + r.entryDate
+            + " | "
+            + r.entryTime
+            + "\n"
+
+            "Exit: "
+            + (
+                r.exitDate.empty()
+                ? "Not Exited"
+                : r.exitDate
+            )
+            + " | "
+            + (
+                r.exitTime.empty()
+                ? "Not Exited"
+                : r.exitTime
+            )
+            + "\n"
+
+            "Status: "
+            + r.status
+            + "\n"
+
+            "--------------------------------\n";
+
+        count++;
+    }
+
+    // --------------------------------------------------------
+    // REPORT FOOTER
+    // --------------------------------------------------------
+
+    message +=
+        "\nREPORT GENERATED BY\n"
+        "Reliable Logistics Solutions Pvt. Ltd.\n"
+        "Campus Truck Management System";
+
+    // --------------------------------------------------------
+    // OPEN WHATSAPP
+    // --------------------------------------------------------
 
     string encoded =
         urlEncode(message);
 
     string whatsappURL =
-        "https://wa.me/?text=" +
-        encoded;
+        "https://wa.me/?text="
+        + encoded;
 
 #ifdef _WIN32
 
     string command =
-        "start \"\" \"" +
-        whatsappURL +
-        "\"";
+        "start \"\" \""
+        + whatsappURL
+        + "\"";
 
     system(command.c_str());
 
 #elif __APPLE__
 
     string command =
-        "open \"" +
-        whatsappURL +
-        "\"";
+        "open \""
+        + whatsappURL
+        + "\"";
 
     system(command.c_str());
 
 #else
 
     string command =
-        "xdg-open \"" +
-        whatsappURL +
-        "\"";
+        "xdg-open \""
+        + whatsappURL
+        + "\"";
 
     system(command.c_str());
 
 #endif
 
-    cout <<
-        "\nWhatsApp share page opened.\n";
+    cout << "\nWhatsApp report opened successfully.\n";
 }
-
-// ============================================================
-// OPEN DASHBOARD
-// ============================================================
 
 void openDashboard()
 {
